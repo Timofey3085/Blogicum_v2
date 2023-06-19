@@ -45,3 +45,6 @@ def category_posts(request, category_slug) -> HttpResponse:
         category=category,)
     context = {'category': category, 'post_list': post_list}
     return render(request, template, context)
+
+
+12345
