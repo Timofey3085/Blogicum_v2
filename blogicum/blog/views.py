@@ -11,9 +11,9 @@ def index(request) -> HttpResponse:
     post_list = Post.objects.select_related(
         'author', 'location', 'category',
     ).filter(
-            is_published=True,
-            category__is_published=True,
-            pub_date__lte=current_time).order_by()[:5]
+        is_published=True,
+        category__is_published=True,
+        pub_date__lte=current_time).order_by()[:5]
     context = {'post_list': post_list}
     return render(request, template, context)
 
@@ -24,12 +24,10 @@ def post_detail(request, id) -> HttpResponse:
         Post.objects.select_related(
          'author', 'location', 'category',
         ).filter(
-                is_published=True,
-                pub_date__lte=current_time,
-                category__is_published=True,
-                id=id
-        )
-    )
+                 is_published=True,
+                 pub_date__lte=current_time,
+                 category__is_published=True,
+                 id=id))
     context = {'post': post}
     return render(request, template, context)
 
@@ -37,17 +35,13 @@ def post_detail(request, id) -> HttpResponse:
 def category_posts(request, category_slug) -> HttpResponse:
     template: str = 'blog/category.html'
     category = get_object_or_404(
-        Category.objects.filter(
-            is_published=True,
-            slug=category_slug
-        )
+        Category.objects.filter(is_published=True, slug=category_slug)
     )
     post_list = Post.objects.select_related(
         'author', 'location', 'category',
     ).filter(
-            pub_date__lte=current_time,
-            is_published=True,
-            category=category,
-    )
+        pub_date__lte=current_time,
+        is_published=True,
+        category=category,)
     context = {'category': category, 'post_list': post_list}
     return render(request, template, context)
