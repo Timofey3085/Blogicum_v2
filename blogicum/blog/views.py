@@ -24,10 +24,10 @@ def post_detail(request, id) -> HttpResponse:
         Post.objects.select_related(
             'author', 'location', 'category',
         ).filter(
-                    is_published=True,
-                    pub_date__lte=current_time,
-                    category__is_published=True,
-                    id=id))
+            is_published=True,
+            pub_date__lte=current_time,
+            category__is_published=True,
+            id=id))
     context = {'post': post}
     return render(request, template, context)
 
