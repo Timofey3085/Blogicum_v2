@@ -4,6 +4,7 @@ from blog.models import Post, Category
 from datetime import datetime as dt
 
 current_time = dt.now()
+limit_publication = 5
 
 
 def index(request) -> HttpResponse:
@@ -13,7 +14,7 @@ def index(request) -> HttpResponse:
     ).filter(
         is_published=True,
         category__is_published=True,
-        pub_date__lte=current_time).order_by()[:5]
+        pub_date__lte=current_time).order_by()[:limit_publication]
     context = {'post_list': post_list}
     return render(request, template, context)
 
